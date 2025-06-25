@@ -1,17 +1,6 @@
-const player1 = {
-    NOME: "Mario",
-    VELOCIDADE: 4,
-    MANOBRABILIDADE: 3,
-    PODER: 3,
-    PONTOS: 0
- }
- const player2 = {
-    NOME: "Luigi",
-    VELOCIDADE: 3,
-    MANOBRABILIDADE: 4,
-    PODER: 4,
-    PONTOS: 0
- }
+const {players} = require('./players')
+
+var player1, player2;
 
  async function rollDice() {
 	return Math.floor(Math.random()*6)+1
@@ -48,7 +37,7 @@ const player1 = {
  }
 
  async function playRaceEngine(character1, character2) {
-	for(let round = 1; round<=50; round++){
+	for(let round = 1; round<=5; round++){
         //star round
 		console.log(`🏁 Rodada ${round}`);
 		
@@ -153,6 +142,9 @@ ${character2.NOME}: ${character2.PONTOS} ponto(s).
  }
 
  (async function main() {
+
+    player1 = players[await rollDice() -1];
+    player2 = players[await rollDice() -1];
   console.log(` -----------------
 🏁 Corrida iniciada 🏁
 Adversarios: ${player1.NOME} e ${player2.NOME}
@@ -160,6 +152,6 @@ Corrida Começando`);
 
 await playRaceEngine(player1, player2);
 
-await declareWinner(player1,player2);
+await declareWinner(player1, player2);
 
  })()
