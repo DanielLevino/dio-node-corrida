@@ -42,8 +42,13 @@ const player1 = {
     console.log(`${charName} rolou um 🎲 de ${block} ${dice} + ${attrib} = ${dice+attrib}`)
  }
 
+ async function getRandomWeapon(){
+    let rand = Math.random();
+    return rand > 0.33 ? "Casco" : "Bomba" ;
+ }
+
  async function playRaceEngine(character1, character2) {
-	for(let round = 1; round<=10; round++){
+	for(let round = 1; round<=50; round++){
         //star round
 		console.log(`🏁 Rodada ${round}`);
 		
@@ -84,15 +89,23 @@ const player1 = {
 
             if(powerResult1>powerResult2){
                 if(character2.PONTOS > 0){
-                    console.log(`${character2.NOME} perdeu ponto`);
-                    character2.PONTOS--;
+                    let weapon = await getRandomWeapon();
+                    let damage = weapon == "Casco" ? 1 : 2
+                    
+                    character2.PONTOS = character2.PONTOS >= damage ? character2.PONTOS - damage : 0;
+                    
+                    console.log(`${character1.NOME} usou ${weapon} e ${character2.NOME} perdeu ${damage} ponto(s)`);
                 }else{
                     console.log(`${character2.NOME} já está com ${character2.PONTOS} e não pode perder mais pontos`)
                 }
             }else if(powerResult2>powerResult1){
                 if(character1.PONTOS>0){
-                    character1.PONTOS--;
-                    console.log(`${character1.NOME} perdeu ponto`);
+                    let weapon = await getRandomWeapon();
+                    let damage = weapon == "Casco" ? 1 : 2
+                    
+                    character1.PONTOS = character1.PONTOS >= damage ? character1.PONTOS - damage : 0;
+                    
+                    console.log(`${character2.NOME} usou ${weapon} e ${character1.NOME} perdeu ${damage} ponto(s)`);
                 }else {
                     console.log(`${character1.NOME} já está com ${character1.PONTOS} e não pode perder mais pontos`)
 
@@ -115,6 +128,12 @@ const player1 = {
             // console.log('');
         }
         console.log("----------------------------");
+        console.log(`
+Resumo dos pontos!
+${character1.NOME}: ${character1.PONTOS} ponto(s).
+${character2.NOME}: ${character2.PONTOS} ponto(s).
+
+-----------------------------`)
         
 	}
  }
