@@ -1,12 +1,22 @@
-const {players} = require('./players')
+import { players } from "./players.js";
 
 var player1, player2;
 
- async function rollDice() {
-	return Math.floor(Math.random()*6)+1
- }
 
- async function getRandomBlock() {
+/**
+ * 
+ * @returns a random number between 1 to 6
+ */
+async function rollDice() {
+	return Math.floor(Math.random()*6)+1
+}
+
+/**
+ * get a random block between 3 types.
+ * 
+ * @returns a string with a block name
+ */
+async function getRandomBlock() {
     let random = Math.random();
     let result
 
@@ -25,18 +35,39 @@ var player1, player2;
     }
 
 	return result
- }
+}
 
- async function logRollResult(charName, block, dice, attrib){
+/**
+ * print a name of character with the value of your dice and
+ * your attribuite with result of the sum of them for the block type
+ * 
+ * @param {string} charName name of character
+ * @param {string} block type of block
+ * @param {number} dice value of dice
+ * @param {number} attrib value of attribute
+ */
+async function logRollResult(charName, block, dice, attrib){
     console.log(`${charName} rolou um 🎲 de ${block} ${dice} + ${attrib} = ${dice+attrib}`)
- }
+}
 
- async function getRandomWeapon(){
+/**
+ * return a rando weapon name with a 1/3 chance of
+ * Bomba and 2/3 chance of Casco
+ * 
+ * @returns a string with type of weapon
+ */
+async function getRandomWeapon(){
     let rand = Math.random();
     return rand > 0.33 ? "Casco" : "Bomba" ;
- }
+}
 
- async function playRaceEngine(character1, character2) {
+/**
+ * run a game with 2 player
+ * 
+ * @param {player} character1 player 1
+ * @param {player} character2 player 2
+ */
+async function playRaceEngine(character1, character2) {
 	for(let round = 1; round<=5; round++){
         //star round
 		console.log(`🏁 Rodada ${round}`);
@@ -125,9 +156,14 @@ ${character2.NOME}: ${character2.PONTOS} ponto(s).
 -----------------------------`)
         
 	}
- }
+}
 
- async function declareWinner(char1, char2){
+/**
+ * declare a winner between 2 players
+ * @param {player} char1 player 1
+ * @param {player} char2 player 2
+ */
+async function declareWinner(char1, char2){
     console.log("Resultado Final");
     console.log(`${char1.NOME}: ${char1.PONTOS} ponto(s)`);
     console.log(`${char2.NOME}: ${char2.PONTOS} ponto(s)`);
@@ -139,9 +175,12 @@ ${character2.NOME}: ${character2.PONTOS} ponto(s).
     }else {
         console.log("A corrida terminou em empate!");
     }
- }
+}
 
- (async function main() {
+/**
+ * Run the game
+ */
+(async function main() {
 
     player1 = players[await rollDice() -1];
     player2 = players[await rollDice() -1];
@@ -154,4 +193,4 @@ await playRaceEngine(player1, player2);
 
 await declareWinner(player1, player2);
 
- })()
+})()
