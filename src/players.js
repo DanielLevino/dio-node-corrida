@@ -1,4 +1,4 @@
-const players = [
+export const players = [
     {
         NOME: "Mario",
         VELOCIDADE: 4,
@@ -33,7 +33,8 @@ const players = [
         MANOBRABILIDADE: 4,
         PODER: 4,
         PONTOS: 0
-     },{
+     },
+     {
         NOME: "Donkey Kong",
         VELOCIDADE: 2,
         MANOBRABILIDADE: 2,
@@ -41,7 +42,3 @@ const players = [
         PONTOS: 0
      }
 ]
-
-module.exports = {
-    players
-}
